@@ -84,7 +84,7 @@ class ImageProcessingApp:
         self.threshold_scale.set(127)
         self.threshold_scale.pack(fill=tk.X, pady=(0, 12))
 
-        pipeline_frame = tk.LabelFrame(left_panel, text="Pipeline (single run)", padx=8, pady=8)
+        pipeline_frame = tk.LabelFrame(left_panel, text="Pipeline", padx=8, pady=8)
         pipeline_frame.pack(fill=tk.X, pady=(10, 0))
 
         tk.Checkbutton(
