@@ -1,12 +1,12 @@
 # ImageProcessing
 
-Проєкт для обробки зображень на Python з GUI.
+Python image processing project with a GUI.
 
-## Вимоги
+## Requirements
 
 - Python 3.10+
 
-## Швидкий старт (macOS / zsh)
+## Quick Start (macOS / zsh)
 
 ```bash
 cd /Users/aleksandrstarzhynskyi/Repositories/Git/GitHub/ImageProcessing
@@ -16,7 +16,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
-## Якщо `.venv` вже створений
+## If `.venv` Already Exists
 
 ```bash
 cd /Users/aleksandrstarzhynskyi/Repositories/Git/GitHub/ImageProcessing
@@ -24,7 +24,7 @@ source .venv/bin/activate
 python main.py
 ```
 
-## Вихід із віртуального середовища
+## Deactivate Virtual Environment
 
 ```bash
 deactivate
