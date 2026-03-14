@@ -4,8 +4,7 @@ import math
 from PIL import Image
 
 
-def _clamp(value):
-    """Clamp numeric value to valid 8-bit channel range."""
+def clamp(value):
     value = int(round(value))
     if value < 0:
         return 0
@@ -14,8 +13,7 @@ def _clamp(value):
     return value
 
 
-def _to_rgb(pixel):
-    """Normalize a source pixel into an RGB tuple."""
+def to_rgb(pixel):
     if isinstance(pixel, int):
         return pixel, pixel, pixel
     if len(pixel) >= 3:
@@ -34,8 +32,8 @@ def apply_grayscale(image):
 
     for y in range(height):
         for x in range(width):
-            red, green, blue = _to_rgb(src_pixels[x, y])
-            gray = _clamp(0.299 * red + 0.587 * green + 0.114 * blue)
+            red, green, blue = to_rgb(src_pixels[x, y])
+            gray = clamp(0.299 * red + 0.587 * green + 0.114 * blue)
             dst_pixels[x, y] = (gray, gray, gray)
 
     return result
@@ -50,11 +48,11 @@ def apply_brightness(image, value):
 
     for y in range(height):
         for x in range(width):
-            red, green, blue = _to_rgb(src_pixels[x, y])
+            red, green, blue = to_rgb(src_pixels[x, y])
             dst_pixels[x, y] = (
-                _clamp(red + value),
-                _clamp(green + value),
-                _clamp(blue + value),
+                clamp(red + value),
+                clamp(green + value),
+                clamp(blue + value),
             )
 
     return result
@@ -76,7 +74,7 @@ def apply_box_filter(image, kernel_size):
     for y in range(height):
         for x in range(width):
             if x < offset or x >= width - offset or y < offset or y >= height - offset:
-                dst_pixels[x, y] = _to_rgb(src_pixels[x, y])
+                dst_pixels[x, y] = to_rgb(src_pixels[x, y])
                 continue
 
             sum_red = 0
@@ -86,15 +84,15 @@ def apply_box_filter(image, kernel_size):
             for ky in range(-offset, offset + 1):
                 for kx in range(-offset, offset + 1):
                     px, py = x + kx, y + ky
-                    red, green, blue = _to_rgb(src_pixels[px, py])
+                    red, green, blue = to_rgb(src_pixels[px, py])
                     sum_red += red
                     sum_green += green
                     sum_blue += blue
 
             dst_pixels[x, y] = (
-                _clamp(sum_red / area),
-                _clamp(sum_green / area),
-                _clamp(sum_blue / area),
+                clamp(sum_red / area),
+                clamp(sum_green / area),
+                clamp(sum_blue / area),
             )
 
     return result
@@ -134,7 +132,7 @@ def apply_sobel(image):
                     grad_x += pixel_value * gx_kernel[ky + 1][kx + 1]
                     grad_y += pixel_value * gy_kernel[ky + 1][kx + 1]
 
-            magnitude = _clamp(math.sqrt(grad_x * grad_x + grad_y * grad_y))
+            magnitude = clamp(math.sqrt(grad_x * grad_x + grad_y * grad_y))
             dst_pixels[x, y] = (magnitude, magnitude, magnitude)
 
     return result
@@ -147,7 +145,7 @@ def apply_threshold(image, threshold):
 
     src_pixels = grayscale.load()
     dst_pixels = result.load()
-    threshold = _clamp(threshold)
+    threshold = clamp(threshold)
 
     for y in range(height):
         for x in range(width):
