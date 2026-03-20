@@ -1,5 +1,3 @@
-"""Tkinter GUI for manual image processing operations."""
-
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
